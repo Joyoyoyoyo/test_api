@@ -1,0 +1,53 @@
+
+version: '2'
+
+volumes:
+   mysqldata: ~
+
+   appdata: ~
+
+services:
+    php72-symfo:
+        build: .
+        depends_on:
+            - mysql
+        volumes:
+            - ./project:/project:cached
+            - appdata:/var/cache
+            - appdata:/var/log
+            - ./vendor:/vendor:delegated                   
+    
+        working_dir: /project
+        ports:
+           
+            - "90:80"
+
+    mysql:
+        image: mysql:5.7
+        volumes:
+            - mysqldata:/var/lib/mysql
+        environment:
+            # Nécessaire
+            - MYSQL_ROOT_PASSWORD=root
+         
+            - MYSQL_DATABASE=api-resfful
+            - MYSQL_USER=root
+            - MYSQL_PASSWORD=root
+        ports:
+          
+            - "3306:3306"
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - '8080:80'
+    datastore:
+      image: busybox
+      volumes:
+        - /var/lib/mysql
+
