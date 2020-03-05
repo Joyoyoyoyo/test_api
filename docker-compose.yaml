@@ -10,7 +10,7 @@ services:
     php72-symfo:
         build: .
         depends_on:
-            - mysql
+            - mysql57
         volumes:
             - ./project:/project:cached
             - appdata:/var/cache
@@ -22,7 +22,7 @@ services:
            
             - "90:80"
 
-    mysql:
+    mysql57:
         image: mysql:5.7
         volumes:
             - mysqldata:/var/lib/mysql
@@ -40,9 +40,9 @@ services:
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         links:
-            - mysql
+            - mysql57
         environment:
-            PMA_HOST: mysql
+            PMA_HOST: mysql57
             PMA_PORT: 3306
         ports:
             - '8080:80'

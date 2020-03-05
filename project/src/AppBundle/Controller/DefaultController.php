@@ -88,7 +88,7 @@ class DefaultController extends AbstractFOSRestController
         
     }
 
-        /**
+    /**
      * @Rest\Delete(
      *     path = "/subscription/{id}",
      *     name = "app_subscription_delete",
